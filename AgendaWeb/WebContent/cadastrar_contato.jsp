@@ -12,9 +12,7 @@
 	if (usuario == null) {
 		response.sendRedirect("login.html");
 	} else {
-		ArrayList<Contato> contatos = new ArrayList<>();
-		ContatoDAO contatoDao = new ContatoDAO();
-		contatos = contatoDao.getContatos(usuario.getId());
+		
 %>
 
 <!DOCTYPE html>
@@ -70,28 +68,7 @@
 						</h3>
 					</div>
 					<div class="panel-body">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Nome</th>
-									<th>E-mail</th>
-								</tr>
-							</thead>
-							
-							<% for (Contato c : contatos){ %>
-								<tr>
-									<td><%= c.getId() %></td>
-									<td><%= c.getNome() %></td>
-									<td><%= c.getEmail() %></td>
-									<td><a href="editar_contato.jsp?idContato=<%= c.getId() %>"><img src="imagens/edit24.png"></a></td>
-									<td><a href="excluir_contato.jsp?idContato=<%= c.getId() %>"><img src="imagens/delete24.png"></a></td>
-								</tr>
-							<%	
-							}
-							%>
-							
-						</table>
+						
 					</div>
 					<div class="panel-footer">Panel footer</div>
 				</div>
