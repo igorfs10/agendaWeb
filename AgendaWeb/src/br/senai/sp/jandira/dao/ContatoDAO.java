@@ -92,4 +92,39 @@ public class ContatoDAO {
 		return status;
 	}
 	
+	public Contato getContato(int idContato){
+		
+		String sql = "SELECT * FROM contatos "
+				+ "WHERE id = ?";
+		
+		try{
+			
+			stm = Conexao.getConexao().prepareStatement(sql);
+			stm.setInt(1, idContato);
+			
+			rs = stm.executeQuery();
+			
+			rs.next();
+			contato = new Contato();
+			contato.setId(rs.getInt("id"));
+			contato.setNome(rs.getString("nome"));
+			contato.setEmail(rs.getString("email"));
+			contato.setDtNasc(rs.getString("dtNasc"));
+			contato.setLogradouro(rs.getString("logradouro"));
+			contato.setBairro(rs.getString("bairro"));
+			contato.setCidade(rs.getString("cidade"));
+			contato.setEstado(rs.getString("estado"));
+			contato.setCep(rs.getString("cep"));
+			contato.setTelefone(rs.getString("telefone"));
+			contato.setCelular(rs.getString("celular"));
+			contato.setSexo(rs.getString("sexo"));
+			contato.setIdUsuario(rs.getInt("idUsuario"));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return contato;
+	}
+	
 }
