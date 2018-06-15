@@ -13,6 +13,14 @@ public class ContatoDAO {
 	private PreparedStatement stm;
 	private ResultSet rs;
 	
+	public ContatoDAO(){
+		
+	}
+	
+	public ContatoDAO(Contato contato){
+		this.contato = contato;
+	}
+	
 	public ArrayList<Contato> getContatos(int idUsuario){
 		ArrayList<Contato> contatos = new ArrayList<>();
 		
@@ -31,7 +39,7 @@ public class ContatoDAO {
 				contato.setId(rs.getInt("id"));
 				contato.setNome(rs.getString("nome"));
 				contato.setEmail(rs.getString("email"));
-				contato.setDtNasc(rs.getDate("dtNasc"));
+				contato.setDtNasc(rs.getString("dtNasc"));
 				contato.setLogradouro(rs.getString("logradouro"));
 				contato.setBairro(rs.getString("bairro"));
 				contato.setCidade(rs.getString("cidade"));
@@ -50,4 +58,38 @@ public class ContatoDAO {
 		
 		return contatos;
 	}
+	
+	public boolean gravarContato(){
+		boolean status =true;
+		
+		String sql = "INSERT INTO contatos "
+				+ "(nome, dtNasc, email, logradouro, "
+				+ "bairro, cidade, estado, cep, "
+				+ "telefone, celular, sexo, idUsuario) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+		
+		try {
+			stm = Conexao.getConexao().prepareStatement(sql);
+			stm.setString(1, contato.getNome());
+			stm.setString(2, contato.getDtNasc());
+			stm.setString(3, contato.getEmail());
+			stm.setString(4, contato.getLogradouro());
+			stm.setString(5, contato.getBairro());
+			stm.setString(6, contato.getCidade());
+			stm.setString(7, contato.getEstado());
+			stm.setString(8, contato.getCep());
+			stm.setString(9, contato.getTelefone());
+			stm.setString(10, contato.getCelular());
+			stm.setString(11, contato.getSexo());
+			stm.setInt(12, contato.getIdUsuario());
+			stm.execute();
+			Conexao.getConexao().close();
+		} catch (Exception e) {
+			status = false;
+			e.printStackTrace();
+		}
+		
+		return status;
+	}
+	
 }
